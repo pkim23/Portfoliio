@@ -1,9 +1,9 @@
-# CSE412Project
+# World Analytics Project
 
 World Analytics Project by Tommy Thai, and Peter Kim.
 
 Prerequisites:
-* Installation of Node.js
+* Installation of Node.js and PostgreSQL
 * Importation of the dumpfile
 
 How to run:
