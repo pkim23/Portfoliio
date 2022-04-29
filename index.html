@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+  <title>CSE 412 Project</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="styles.css">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="This is the main homepage of CSE 412 group project.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/autoComplete.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@10.2.7/dist/css/autoComplete.01.min.css">
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="charts.js"></script>
+  <script src="datahandler.js"></script>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav>
+
+    <div class="bar box">
+      <div id="logo">
+        <img id="gico" src="/globeicon.png">
+        <a href="#home">World Analytics</a>
+      </div>
+      <div class="rightside">
+        <a href="#about">About</a>
+        <a href="#data">Data</a>
+        <a href="#lookup">Lookup</a>
+      </div>
+    </div>
+
+  </nav>
+
+  <!-- Header -->
+  <header class="wrapper" style="max-width:1600px;min-width:500px" id="home">
+      <h1>World Analytics :: Group 22</h1>
+      <h3>Peter Kim</h3>
+      <h3>Tommy Thai</h3>
+  </header>
+
+
+  <div class="wrapper" style="max-width:1100px">
+    <div>
+      <img src="world.jpg" alt="world" style="width:100%">
+    </div>
+    <!-- About -->
+    <div class="gap aboutpage" id="about">
+        <h1>About</h1>
+        <br>
+        <p>Hello, welcome to the World Analytics site where you can visualize many attributes of regions/countries such as their economy, population, and size. This web application utilizes D3.js for visualizing datasets.</p>
+    </div>
+    
+    <hr>
+    
+    <!-- Data -->
+    <div class="gap datapage" id="data">
+        <h1 class="center">Data</h1>
+        <br>
+        <h3>Regions</h3>
+        <div id="d1">
+          <p class="graytext">Here is the surface area of each region that makes up the whole world, hover over any arc to reveal the countries and their surface area</p>
+          <div id="d1-charts">
+            <svg width="600" height="600" class="data1" id="rsum">
+            </svg>
+            <div id="rpanel">
+              <h2>Countries:</h2>
+              <div id="clist">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br>    
+        <h3>Populations</h3>
+        <div id="d2">
+          <p class="graytext">Here are the top 10 most populated countries in the world!</p>
+          <p class="graytext">Hover over the bars for more information...</p>
+          <svg width="1200" height="600" class="data2" id="population">
+          </svg>
+          <div id="tooltip">
+          <div id="tooltip-header">
+              <img class="flag" id="tooltip-flag" src="/flags/218.png"/>
+              <h3 id="tooltip-title">Tooltip</h2>
+          </div>
+          <div id="tooltip-content">
+            <!--load tooltip contents here-->
+          </div>
+        </div>
+        </div>
+        <br>    
+    </div>
+    <hr>
+        <!-- Economy -->
+        <h1>Economy Data</h1>
+        <br>
+        <h3>GDP in Countries</h3>
+        <div id="d3">
+          <p class="graytext">The GDP value for different countries</p>
+          <div id="d3-charts">
+            <svg width="1200" height="600" class="data2" id="gdp">
+          </svg>
+          </div>
+        </div>
+    <hr>
+    <!-- Plot Diagram -->
+    <div>
+      <span>x attr:</span>
+      <select id="x-select" onchange="drawScatter()">
+        <optgroup label="Country">
+          <option value="surfacearea">Surface area (km²)</option>
+        </optgroup>
+        <optgroup label="Population">
+          <option value="density">Population density (per km², 2017)</option>
+          <option value="popgrowthrate">Population growth rate (average annual %)</option>
+          <option value="sexratio"> Sex ratio (m per 100 f, 2017)</option>
+          <option value="popnumber">Population in thousands (2017)</option>
+          <option value="urbanpop">Urban population (% of total population)</option>
+          <option value="urbanpopgrowthrate">Urban population growth rate (average annual %)</option>
+        </optgroup>
+        <optgroup label="Economy">
+          <option value="gdpval">GDP: Gross domestic product (million current US$)</option>
+          <option value="gdpgrowthrate">GDP growth rate (annual %, const. 2005 prices)</option>
+          <option value="gdppercapita">GDP per capita (current US$)</option>
+          <option value="agriculture">Economy: Agriculture (% of GVA)</option>
+          <option value="industry">Economy: Industry (% of GVA)</option>
+          <option value="other">Economy: Services and other activity (% of GVA)</option>
+          <option value="imports">International trade: Imports (million US$)</option>
+          <option value="exports">International trade: Exports (million US$)</option>
+          <option value="unemployment">Unemployment (% of labour force)</option>
+        </optgroup>
+      </select>
+      <span>y attr:</span>
+      <select id="y-select" onchange="drawScatter()">
+        <optgroup label="Country">
+          <option value="surfacearea">Surface area (km²)</option>
+        </optgroup>
+        <optgroup label="Population">
+          <option value="density">Population density (per km², 2017)</option>
+          <option value="popgrowthrate">Population growth rate (average annual %)</option>
+          <option value="sexratio"> Sex ratio (m per 100 f, 2017)</option>
+          <option value="popnumber">Population in thousands (2017)</option>
+          <option value="urbanpop">Urban population (% of total population)</option>
+          <option value="urbanpopgrowthrate">Urban population growth rate (average annual %)</option>
+        </optgroup>
+        <optgroup label="Economy">
+          <option value="gdpval">GDP: Gross domestic product (million current US$)</option>
+          <option value="gdpgrowthrate">GDP growth rate (annual %, const. 2005 prices)</option>
+          <option value="gdppercapita">GDP per capita (current US$)</option>
+          <option value="agriculture">Economy: Agriculture (% of GVA)</option>
+          <option value="industry">Economy: Industry (% of GVA)</option>
+          <option value="other">Economy: Services and other activity (% of GVA)</option>
+          <option value="imports">International trade: Imports (million US$)</option>
+          <option value="exports">International trade: Exports (million US$)</option>
+          <option value="unemployment">Unemployment (% of labour force)</option>
+        </optgroup>
+      </select>
+      <svg width="1200" height="600" class="data3" id="scatterplot">
+      </svg>
+    </div>
+    <hr>
+    <!-- Lookup -->
+    <div class="lookuppage" id="lookup">
+      <h1>Lookup</h1><br>
+      <div>
+        <h3>Search by Country</h3>
+        <div class="autoComplete_wrapper">
+          <input id="autoComplete" type="search" dir="ltr" spellcheck=false autocorrect="off" autocomplete="off" autocapitalize="off">
+        </div>
+        <div id="countryholder">
+          <div id="cheader">
+            <img id="cflag" src="flags/218.png">
+            <h3 id="searchcname">United States of America</h3>
+            <div>
+              <div class="center">
+                <p class="ctxt" id="select-region">Region: NorthernAmerica</p>
+                <p class="ctxt" id="select-SA">Surface area: 9833517 km²</p>
+              </div>
+              
+              <p>Population:</p>
+              <p class="ctxt" id="select-population">Population (in thousands): 324460: </p>
+              <p class="ctxt" id="select-growthrate">Population growth rate (average annual %): 0.7%</p>
+              <p class="ctxt" id="select-popdensity">Population density (per km²): 35.5</p>
+              <p class="ctxt" id="select-sexratio">Sex ratio (m per 100 f, 2017): 98</p>
+              <p class="ctxt" id="select-urbanpop">Urban population (% of total population): 81.6%</p>
+              <p class="ctxt" id="select-urbangrowthrate">Urban population (% of total population): 1%</p>
+              <p>Economy</p>
+              <p class="ctxt" id="select-gdpval">GDP: Gross domestic product (million current US$): $18036648</p>
+              <p class="ctxt" id="select-gdpgrowthrate">GDP growth rate (annual %, const. 2005 prices): 2.6%</p>
+              <p class="ctxt" id="select-gdppercapita">GDP per capita (current US$): $56053.8</p>
+              <p class="ctxt" id="select-agriculture">Economy: Agriculture (% of GVA): 1%</p>
+              <p class="ctxt" id="select-industry">Economy: Industry (% of GVA): 19.7%</p>
+              <p class="ctxt" id="select-other">Economy: Services and other activity (% of GVA): 79.3%</p>
+              <p class="ctxt" id="select-imports">International trade: Imports (million US$): $2249661</p>
+              <p class="ctxt" id="select-exports">International trade: Exports (million US$): $1453167</p>
+              <p class="ctxt" id="select-unemployment">Unemployment (% of labour force): 4.9%</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>By Group 22 CSE 412</p>
+  </footer>
+  </body>
+</html>
